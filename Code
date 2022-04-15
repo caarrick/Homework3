@@ -293,7 +293,7 @@ tokenizer = BertTokenizer.from_pretrained('yiyanghkust/finbert-tone')
 
 nlp = pipeline("sentiment-analysis", model=finbert, tokenizer=tokenizer)
 
-df_CROX=pd.DataFrame()
+df_GIS=pd.DataFrame()
 for index in range(len(Final_10k)):
     df_sentence = txt2sentence(Final_10k[index])
     
@@ -352,7 +352,7 @@ for index in range(len(Final_10K)):
             positive=positive+1
     
     GIS = [{'Ticker':"GIS",'Year':'2021','Neutral':neutral,'Positive':positive,'Negative':negative}]
-    df_CROX=df_CROX.append(pd.DataFrame(CROX))
+    df_GIS=df_GIS.append(pd.DataFrame(CROX))
             
 #%% *keep years straight before fixed
 # 2021: neutral 376
@@ -369,19 +369,19 @@ def price2ret(prices,retType='simple'):
     return ret
 
 import pandas_datareader.data as web
-CROX_Price= web.DataReader('GIS', 'yahoo', start='2017-01-01', end='2021-04-01')
-CROX_Price['Returns']= price2ret(CROX_Price[['Adj Close']])
+GIS_Price= web.DataReader('GIS', 'yahoo', start='2017-01-01', end='2021-04-01')
+GIS_Price['Returns']= price2ret(CROX_Price[['Adj Close']])
 
 import matplotlib.pyplot as plt
 
 plt.figure()
-plt.plot(CROX_Price['Adj Close'], color='Purple',)
+plt.plot(GIS_Price['Adj Close'], color='Purple',)
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.title('GIS Price!')
 
 plt.figure()
-plt.plot(CROX_Price['Returns'], color='Pink',)
+plt.plot(GIS_Price['Returns'], color='Pink',)
 plt.xlabel('Date')
 plt.ylabel('% Returns')
 plt.title('GIS Returns!')# %% SENTIMENT ANALYSIS *need to fix year in df output*
